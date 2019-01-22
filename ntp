@@ -1,0 +1,9 @@
+#!/bin/bash
+sync_time() {
+     [ -x /usr/sbin/ntpdate ] || yum install ntpdate -y
+     if grep -q ntpdate /var/spool/cron/root 2>/dev/null; then sed -i '/ntpdate/d' /var/spool/cron/root; fi
+     echo -e "\n*/5 * * * * /usr/sbin/ntpdate -u pool.ntp.org >/dev/null 2>&1" >> /var/spool/cron/root
+     /usr/sbin/ntpdate -u pool.ntp.org
+     echo -e "\n=======\n" && cat /var/spool/cron/root
+}
+sync_time
