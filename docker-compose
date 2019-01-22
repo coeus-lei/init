@@ -1,0 +1,5 @@
+#!/bin/bash
+Url=https://github.com/docker/compose/releases
+Version=$(curl -Lks "$ComposeUrl"|awk -F'[><]' '$0~/releases\/tag/&&$0!~/rc/{print $3;exit}')
+curl -Lk $ComposeUrl/download/$Version/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
