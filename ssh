@@ -1,0 +1,6 @@
+#!/bin/bash
+sed -ri 's/^(#)?Port 22$/Port 22/;/^Port/a Port 22992' /etc/ssh/sshd_config
+sed -i -e "/\#MaxSessions 10$/a #AllowUsers\nDenyUsers toor administrator administrateur admin adm test guest info mysql user oracle" /etc/ssh/sshd_config
+sed -i -e '/GSSAPIAuthentication yes$/d' /etc/ssh/sshd_config
+sed -i -e '/^GSSAPICleanupCredentials yes$/d' /etc/ssh/sshd_config
+[[ "$(awk '/^UseDNS/{print $2}' /etc/ssh/sshd_config)" =~ ^[nN][oO]$ ]] || { echo 'UseDNS no' >> /etc/ssh/sshd_config; }
