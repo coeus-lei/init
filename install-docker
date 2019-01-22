@@ -1,0 +1,9 @@
+#!/bin/bash
+curl -Lk https://raw.githubusercontent.com/coeus-lei/init/master/get-docker|bash
+curl -Lk https://raw.githubusercontent.com/coeus-lei/init/master/docker-compose|bash
+mkdir -p /etc/docker
+cat <<'EOL' > /etc/docker/daemon.json
+{
+  "bip": "172.31.0.1/16"
+}
+EOL
